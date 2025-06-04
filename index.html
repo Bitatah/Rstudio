@@ -80,15 +80,15 @@ div.csl-indent {
 }</style>
 
 
-<script src="HandelingDuplicates_files/libs/clipboard/clipboard.min.js"></script>
-<script src="HandelingDuplicates_files/libs/quarto-html/quarto.js"></script>
-<script src="HandelingDuplicates_files/libs/quarto-html/popper.min.js"></script>
-<script src="HandelingDuplicates_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="HandelingDuplicates_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="HandelingDuplicates_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="HandelingDuplicates_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="HandelingDuplicates_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="HandelingDuplicates_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="Handout_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Handout_files/libs/quarto-html/quarto.js"></script>
+<script src="Handout_files/libs/quarto-html/popper.min.js"></script>
+<script src="Handout_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="Handout_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Handout_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Handout_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Handout_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Handout_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
 
 <link rel="stylesheet" href="_extensions/apaquarto/apa.css">
@@ -105,13 +105,9 @@ div.csl-indent {
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">introduction</a></li>
   <li><a href="#detecting-and-handling-duplicates-in-r" id="toc-detecting-and-handling-duplicates-in-r" class="nav-link" data-scroll-target="#detecting-and-handling-duplicates-in-r">Detecting and Handling Duplicates in R</a></li>
-  <li><a href="#a-numeric-vector-with-some-repeats" id="toc-a-numeric-vector-with-some-repeats" class="nav-link" data-scroll-target="#a-numeric-vector-with-some-repeats">A numeric vector with some repeats</a></li>
-  <li><a href="#identify-which-elements-are-duplicates" id="toc-identify-which-elements-are-duplicates" class="nav-link" data-scroll-target="#identify-which-elements-are-duplicates">Identify which elements are duplicates</a></li>
-  <li><a href="#extract-the-unique-values-remove-duplicates" id="toc-extract-the-unique-values-remove-duplicates" class="nav-link" data-scroll-target="#extract-the-unique-values-remove-duplicates">Extract the unique values (remove duplicates)</a></li>
-  <li><a href="#remove-duplicate-rows-based-on-a-single-column-e.g.-sepal.width" id="toc-remove-duplicate-rows-based-on-a-single-column-e.g.-sepal.width" class="nav-link" data-scroll-target="#remove-duplicate-rows-based-on-a-single-column-e.g.-sepal.width">Remove duplicate rows based on a single column, e.g., Sepal.Width</a></li>
   <li><a href="#affidavit" id="toc-affidavit" class="nav-link" data-scroll-target="#affidavit">Affidavit</a></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="HandelingDuplicates.pdf"><i class="bi bi-file-pdf"></i>Typst (apaquarto)</a></li><li><a href="HandelingDuplicates.pdf"><i class="bi bi-file-pdf"></i>PDF (apaquarto)</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Handout.pdf"><i class="bi bi-file-pdf"></i>Typst (apaquarto)</a></li><li><a href="Handout.pdf"><i class="bi bi-file-pdf"></i>PDF (apaquarto)</a></li></ul></div></nav>
 </div>
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
 </div>
@@ -185,33 +181,6 @@ div.csl-indent {
 <p>R provides robust tools for identifying and removing duplicates, both in base R and in the tidyverse collection of packages. This section details how to use these tools with code examples.</p>
 <p>We will cover base R functions like duplicated(), unique(), and anyDuplicated(), as well as tidyverse approaches with dplyr (especially the distinct()function).</p>
 <p>Conceptual illustration of identifying and removing duplicate rows in a dataset (blue rows indicate duplicates). In R, base functions like duplicated()/unique() and the dplyr function distinct() are commonly used to address duplicates.</p>
-<p><strong>Base R Techniques for Duplicates</strong></p>
-<p>Base R has built-in functions to detect duplicates and extract unique values. The primary function is duplicated(), which returns a logical vector indicating which elements or rows are duplicates of a previous occurrencerdrr.io. Each element of the vector is TRUE if that row/element has appeared before and is thus a duplicate, and FALSE if it is the first occurrence or unique. A related base function, unique(), returns the unique elements or rows of a vector/data frame, effectively removing duplicates. Let’s start with a simple example on a vector to illustrate duplicated():</p>
-</section>
-<section id="a-numeric-vector-with-some-repeats" class="level1">
-<h1>A numeric vector with some repeats</h1>
-<p>x &lt;- c(1, 1, 4, 5, 4, 6)</p>
-</section>
-<section id="identify-which-elements-are-duplicates" class="level1">
-<h1>Identify which elements are duplicates</h1>
-<p>duplicated(x) #&gt; [1] FALSE TRUE FALSE FALSE TRUE FALSE</p>
-<p>Here, the output shows TRUE for positions 2 and 5, meaning x[2] and x[5] are duplicates of earlier values in the vector (indeed, x[2] = 1 is a repeat of x[1] = 1, and x[5] = 4 repeats x[3] = 4). The first occurrence of a value is not marked as a duplicate – by definition, duplicated() only flags the subsequent occurrences. We can use this result to extract or remove duplicates: # Extract the duplicate values themselves x[duplicated(x)] #&gt; [1] 1 4</p>
-</section>
-<section id="extract-the-unique-values-remove-duplicates" class="level1">
-<h1>Extract the unique values (remove duplicates)</h1>
-<p>x[!duplicated(x)] #&gt; [1] 1 4 5 6</p>
-<p>In the above, x[duplicated(x)] returns the values that had appeared before (1 and 4 in this case). Conversely, prefixing with ! (logical NOT) gives the values that are not duplicates, effectively the unique set {1, 4, 5, 6}. Using !duplicated()on a data frame will filter to unique rows. In fact, the base R unique() function achieves the same: unique(x) would yield c(1, 4, 5, 6) in this example, and unique(my_data_frame) removes duplicate rows from a data frame. For data frames, duplicated() operates row-wise. For example, if we have a data frame df, duplicated(df) will return a logical vector of length equal to the number of rows, with TRUE for each row that is identical to a previous row. We can use this to identify and remove duplicate rows. Consider a data frame df and the pattern:</p>
-<p>dup_rows &lt;- df[duplicated(df), ] # subset of all duplicate rows (beyond first occurrences) df_no_dups &lt;- df[!duplicated(df), ] # dataframe with duplicates removed</p>
-<p>The first line collects all rows that are duplicates (this will exclude the first instance of each set of duplicates). The second line keeps only the rows that are not flagged as duplicates, which is equivalent to unique(df)</p>
-<p>Partial duplicates by column: Sometimes we want to detect duplicates based on a subset of columns (for instance, find repeated IDs regardless of other differences). In base R, one can use the duplicated() function on a specific column or a combination of columns. For example, duplicated(df$ID) would flag duplicate IDs in the data frame. We can also use duplicated(df[, c(“col1”,“col2”)]) to check for duplicates with respect to a combination of col1 and col2. Rows where both col1 and col2 match an earlier row will be marked. As an example, using R’s built-in iris dataset (which has columns for flower measurements and species):</p>
-</section>
-<section id="remove-duplicate-rows-based-on-a-single-column-e.g.-sepal.width" class="level1">
-<h1>Remove duplicate rows based on a single column, e.g., Sepal.Width</h1>
-<p>iris_unique_width &lt;- iris[ !duplicated(iris$Sepal.Width), ]</p>
-<p>This keeps only the first occurrence of each Sepal.Width value and drops any later rows that repeat a Sepal.Width seen before. After this operation, iris_unique_width would have one row per unique sepal width measurement (in iris, that yields 23 rows out of 150, as there were many repeated widths). Similarly, one could use multiple columns by constructing a key, e.g., !duplicated(iris[, c(“Sepal.Length”,“Species”)]) to remove rows where both length and species repeat. R also provides the helper function anyDuplicated(), which is essentially a faster check to see if any duplicates exist in an object. It returns the index of the first duplicate found (or 0 if no duplicates). This is useful for a quick confirmation. For instance:</p>
-<p>anyDuplicated(iris) #&gt; [1] 143</p>
-<p>The result “143” (hypothetical output) indicates that the 143rd row of iris is a duplicate of an earlier row (meaning at least one duplicate exists). If the result were 0, it would mean no duplicates. Using which(duplicated(iris)) would list all indices of duplicate rows, not just the first. In summary, base R’s approach to duplicates typically involves using duplicated() to create a logical index, then subsetting the data. While effective, it can be a bit clunky for complex operations (like deciding which duplicates to keep based on some criteria). That’s where the tidyverse tools often offer more convenience.</p>
-<p>Of course! Here’s a <strong>longer and more detailed summary</strong> of the section on <strong>Tidyverse Techniques (dplyr)</strong> for handling duplicates, without being too lengthy:</p>
 <hr>
 <p><strong>Tidyverse Techniques (dplyr) – Summary</strong></p>
 <p>In the <strong>tidyverse</strong>, the <code>dplyr</code> package offers a clear and powerful way to detect and remove duplicates using the <code>distinct()</code> function. It works similarly to base R’s <code>unique()</code>, but is often more efficient and user-friendly—especially when working with data frames.</p>
